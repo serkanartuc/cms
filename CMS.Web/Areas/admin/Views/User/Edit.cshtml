@@ -1,0 +1,127 @@
+﻿@model UserEditModel
+
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Kullanıcı Düzenle</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Ana Sayfa</a></li>
+                    <li class="breadcrumb-item active">Kullanıcı Düzenle</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="container-fluid">
+        <div class="card card-primary col-8">
+            <form id="quickForm" asp-action="Edit">
+                <input asp-for="Id" hidden/>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="FirstName">Ad</label>
+                        <input asp-for="FirstName" type="text" name="firstname" class="form-control" placeholder="Ad">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LastName">Soyad</label>
+                        <input asp-for="LastName" type="text" name="lastname" class="form-control" placeholder="Soyad">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email">E-posta</label>
+                        <input asp-for="Email" type="email" name="email" class="form-control" placeholder="E-posta">
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" type="password" id="password" name="password" class="form-control" placeholder="Şifre">
+                    </div>
+                    <div class="form-group">
+                        <input asp-for="ConfirmPassword" type="password" name="confirmpassword" class="form-control" placeholder="Şifre (tekrar)">
+                    </div>
+                </div>
+                <div class="card-footer text-right">                    
+                        <input type="submit" value="Kaydet" class="btn bg-gradient-primary" style="width:25%" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+<script src="~/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="~/plugins/jquery-validation/additional-methods.min.js"></script>
+
+<script>
+    $(function () {
+      $('#quickForm').validate({
+        rules: {
+          email: {
+            required: true,
+            email: true,
+            maxlength: 150,
+          },
+          password: {
+            minlength: 5,
+            maxlength: 16
+          },
+          confirmpassword: {
+            equalTo: "#password",
+            minlength: 5,
+            maxlength: 16
+          },
+          firstname:{
+              required: true,
+              minlength:3,
+              maxlength :25
+          },
+          lastname:{
+              required: true,
+              minlength:3,
+              maxlength :25
+          },
+        },
+        messages: {
+          email: {
+            required: "Bu alan gereklidir.",
+            email: "Lütfen geçerli bir e-posta adresi giriniz.",
+            maxlength: "E-posta alanı en fazla 150 karakterden oluşmalıdır."
+          },
+          password: {
+            minlength: "Şifre en az 5 karakterden oluşmalıdır.",
+            maxlength: "Şifre en fazla 16 karakterden oluşmalıdır."
+          },
+          confirmpassword: {
+            equalTo: "Şifre eşleşmiyor.",
+            minlength: "Şifre en az 5 karakterden oluşmalıdır.",
+            maxlength: "Şifre en fazla 16 karakterden oluşmalıdır."
+          },
+          firstname: {
+            required: "Bu alan gereklidir.",
+            minlength: "Ad alanı en az 3 karakterden oluşmalıdır.",
+            maxlength: "Ad alanı en fazla 25 karakterden oluşmalıdır."
+          },
+          lastname: {
+            required: "Bu alan gereklidir.",
+            minlength: "Soyad alanı en az 3 karakterden oluşmalıdır.",
+            maxlength: "Soyad alanı en fazla 25 karakterden oluşmalıdır."
+          },
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+          error.addClass('invalid-feedback');
+          element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+          $(element).addClass('is-invalid').removeClass('is-valid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+          $(element).addClass('is-valid').removeClass('is-invalid')
+        }
+      });
+    });
+</script>
+}

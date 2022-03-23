@@ -1,0 +1,53 @@
+﻿<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/plugins/toastr/toastr.min.js"></script>
+
+
+
+@if (TempData[$"notification.{NotificationType.Success}"] != null)
+{
+    <script type="text/javascript">
+
+        @foreach (var message in TempData[$"notification.{NotificationType.Success}"] as string[])
+        {
+            @:toastr.success('@message');
+        }
+
+    </script>
+
+    TempData.Remove($"notification.{NotificationType.Success}");
+}
+
+@if (TempData[$"notification.{NotificationType.Error}"] != null)
+{
+    <script type="text/javascript">
+
+                toastr.options = {
+          "closeButton": true,
+          "debug": false,
+          "newestOnTop": false,
+          "progressBar": false,
+          "positionClass": "toast-top-right",
+          "preventDuplicates": false,
+          "onclick": null,
+          "showDuration": "300",
+          "hideDuration": "1000",
+          "timeOut": "0",
+          "extendedTimeOut": "0",
+          "showEasing": "swing",
+          "hideEasing": "linear",
+          "showMethod": "fadeIn",
+          "hideMethod": "fadeOut"
+        }
+
+        @foreach (var message in TempData[$"notification.{NotificationType.Error}"] as string[])
+        {
+
+            @:toastr.error('@message');
+        }
+
+
+
+    </script>
+
+    TempData.Remove($"notification.{NotificationType.Error}");
+}
